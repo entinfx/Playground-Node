@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | <%= title %></title>
+</head>
+<body>
+    <%- include('./partials/nav-bar.ejs') %>
+
+    <div class="blogs content">
+        <% if (posts.length === 0) { %>
+            <p>There are no posts yet, be the first one to post!</p>
+            <a href="/blogs/create">New post</a>
+        <% } else { %>
+            <h2>All posts</h2>
+            <% posts.forEach(post => { %>
+                <p><%= post.title %></p><br>
+                <p><%= post.body %></p>
+            <% }) %>
+        <% } %>
+    </div>
+</body>
+</html>

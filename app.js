@@ -15,28 +15,33 @@ app.listen(3000, () => {
 // Once a request is sent to the browser, the rest of the file isn't executed
 // until the next request is performed.
 app.get('/', (req, res) => {
-    // sendFile automatically sets header and status code
-    // res.sendFile('./views/index.html', { root: __dirname })
-    res.render('index')
+    res.render('index', { title: 'Home' })
+})
+
+app.get('/blogs', (req, res) => {
+    const posts = [
+        { title: 'Blog #1', body: 'Poggers blog 1'},
+        { title: 'Blog #2', body: 'Poggers blog 2'},
+        { title: 'Blog #3', body: 'Poggers blog 3'}
+    ]
+
+    res.render('blogs', { title: 'All posts', posts })
 })
 
 app.get('/blogs/create', (req, res) => {
-    res.render('create')
+    res.render('create', { title: 'New post' })
 })
 
 app.get('/about', (req, res) => {
-    // res.sendFile('./views/about.html', { root: __dirname })
-    res.render('about')
+    res.render('about', { title: 'About' })
 })
 
 // Redirects
-// app.get('/about-us', (req, res) => {
-//     // redirect sets status code automatically
-//     res.redirect('/about')
+// app.get('/', (req, res) => {
+//     res.redirect('/blogs')
 // })
 
 // 404: Not found - if no requests above matched, this middleware function fires
 app.use((req, res) => {
-    // res.status(404).sendFile('./views/404.html', { root: __dirname })
-    res.status(404).render('404')
+    res.status(404).render('404', { title: 'Not found' })
 })
