@@ -8,7 +8,9 @@ app.set('view engine', 'ejs')
 // app.set('views', 'my-views')
 
 // Listen for requests on localhost:3000
-app.listen(3000)
+app.listen(3000, () => {
+    console.log('Express: listening on localhost:3000...')
+})
 
 // Once a request is sent to the browser, the rest of the file isn't executed
 // until the next request is performed.
@@ -18,16 +20,20 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+app.get('/blogs/create', (req, res) => {
+    res.render('create')
+})
+
 app.get('/about', (req, res) => {
     // res.sendFile('./views/about.html', { root: __dirname })
     res.render('about')
 })
 
 // Redirects
-app.get('/about-us', (req, res) => {
-    // redirect sets status code automatically
-    res.redirect('/about')
-})
+// app.get('/about-us', (req, res) => {
+//     // redirect sets status code automatically
+//     res.redirect('/about')
+// })
 
 // 404: Not found - if no requests above matched, this middleware function fires
 app.use((req, res) => {
