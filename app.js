@@ -2,6 +2,9 @@
 const express = require('express')
 const app = express()
 
+// Middleware imports
+const morgan = require('morgan')
+
 // Use EJS as view engine
 app.set('view engine', 'ejs')
 
@@ -9,6 +12,10 @@ app.set('view engine', 'ejs')
 app.listen(3000, () => {
     console.log('Listening on localhost:3000...')
 })
+
+// Middleware
+app.use(morgan('dev')) // morgan will run next() on its own
+app.use(express.static('static')) // maps requests to /* to files at ./static/*
 
 // Respond to requests
 app.get('/', (req, res) => {
