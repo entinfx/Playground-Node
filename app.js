@@ -5,7 +5,7 @@ const app = express()
 // Middleware imports
 const morgan = require('morgan')
 
-// Use EJS as view engine
+// View engine
 app.set('view engine', 'ejs')
 
 // Run server at localhost:3000
@@ -14,26 +14,26 @@ app.listen(3000, () => {
 })
 
 // Middleware
-app.use(morgan('dev')) // morgan will run next() on its own
-app.use(express.static('static')) // maps requests to /* to files at ./static/*
+app.use(morgan('dev'))
+app.use(express.static('public'))
 
 // Respond to requests
 app.get('/', (req, res) => {
     res.render('index', { title: 'Home' })
 })
 
-app.get('/blogs', (req, res) => {
+app.get('/posts', (req, res) => {
     const posts = [
-        { title: 'Blog #1', body: 'Poggers blog 1'},
-        { title: 'Blog #2', body: 'Poggers blog 2'},
-        { title: 'Blog #3', body: 'Poggers blog 3'}
+        { title: 'Post #1', body: 'Poggers post 1'},
+        { title: 'Post #2', body: 'Poggers post 2'},
+        { title: 'Post #3', body: 'Poggers post 3'}
     ]
 
-    res.render('blogs', { title: 'All posts', posts })
+    res.render('posts', { title: 'All posts', posts })
 })
 
-app.get('/blogs/create', (req, res) => {
-    res.render('create', { title: 'New post' })
+app.get('/posts/new', (req, res) => {
+    res.render('new', { title: 'New post' })
 })
 
 app.get('/about', (req, res) => {
