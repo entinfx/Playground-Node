@@ -2,6 +2,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const Post = require('./models/post')
 
 // Express app
 const app = express()
@@ -44,6 +45,19 @@ app.get('/posts', (req, res) => {
 
 app.get('/posts/new', (req, res) => {
     res.render('new', { title: 'New post' })
+
+    const post = new Post({
+        title: '',
+        body: ''
+    })
+
+    post.save()
+        .then(result => {
+            res.send(result)
+        })
+        .catch(error => {
+            console.log(error)
+        })
 })
 
 app.get('/about', (req, res) => {
