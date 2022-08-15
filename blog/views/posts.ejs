@@ -10,13 +10,15 @@
     <%- include('./partials/nav-bar.ejs') %>
 
     <div class="posts content">
-        <% if (posts.length === 0) { %>
+        <% if (Post.length === 0) { %>
             <p>There are no posts yet, be the first one to post!</p>
             <a href="/posts/new">New post</a>
         <% } else { %>
             <h2>All posts</h2>
-            <% posts.forEach(post => { %>
-                <p><%= post.title %></p><br>
+            <% Post.forEach(post => { %>
+                <a href="/posts/<%= post.id %>">
+                    <p><%= post.title %></p><br>
+                </a>
                 <p><%= post.body %></p>
             <% }) %>
         <% } %>
