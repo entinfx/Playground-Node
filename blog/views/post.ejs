@@ -24,9 +24,9 @@
         trashCan.addEventListener('click', event => {
             fetch(`/posts/${trashCan.dataset.doc}`, { method: 'DELETE' })
                 // FIXME: 'response' object doesn't seem right
-                .then(response => { response.json() })
-                .then(data => { window.location.href = data.redirect })
-                .catch(error => { console.log(error) })
+                .then((response) => response.json())
+                .then((data) => window.location.href = data.redirect)
+                .catch((error) => console.log(error))
         })
     </script>
 </body>
