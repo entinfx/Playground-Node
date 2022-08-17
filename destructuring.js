@@ -12,3 +12,8 @@ console.log(one)
 
 // Rename objects
 const { name: callsign } = { name: 'X Æ A-12' }
+
+/* Swap array elements */
+let [x, y] = [9, 6]; // <-- semicolon necessary here or js get confused :/
+[x, y] = [y, x] // swap using destructuring
+console.log(x, y)
