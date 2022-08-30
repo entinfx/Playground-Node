@@ -10,17 +10,11 @@ function getData() {
     })
 }
 
-function processData(data) {
-    return new Promise((resolve, reject) => {
-        const errorOccurred = false
-        data += ', and more data!'
-
-        if (errorOccurred) {
-            reject('processData(): Error!')
-        } else {
-            resolve(data)
-        }
-    })
+// We can also use the 'async' keyword to make the function return a resolved
+// promise of a value it's returning
+async function processData(data) {
+    data += ', and more data!'
+    return data
 }
 
 // Without async await
@@ -37,14 +31,22 @@ function processData(data) {
 //     })
 
 // With async await
-// * 'await' will process the resolve portion of the promise
+// * 'async' makes the function's return value a promise resolved to that value
+// * 'async' also sets up a context to use 'await'
+// * 'await' will wait for the resolved value of a promise and return that value
 // * All promise rejects will be caught in the catch block
 async function testAsyncAwait() {
     try {
-        const data = await getData()
-        console.log(data)
-        const processedData = await processData(data)
-        console.log(processedData)
+        // Multiple awaits in a row will make them wait for each other:
+        // const data = await getData()
+        // const moreData = await getData()
+
+        // to run them concurrently, group them into a single promise and await
+        const data = getData()
+        const moreData = getData()
+        const allData = await Promise.all([data, moreData])
+
+        return allData
     } catch (error) {
         console.log(error)
     }
