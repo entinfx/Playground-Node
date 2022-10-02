@@ -24,8 +24,8 @@ function Pokemon(name, type) {
     this.type = type
 }
 
-Pokemon.prototype.attack = () => {
-    console.log(`${this.name} (${this.type}) attacks!`)
+Pokemon.prototype.attack = function() {
+    console.log(`Pokemon ${this.name} of type (${this.type}) attacks!`)
 }
 
 // With classes the syntax is simplified:
@@ -41,6 +41,7 @@ Pokemon.prototype.attack = () => {
 // }
 
 /* Inheritance */
+// Create a new class Pikachu
 function Pikachu(name, type, nickname) {
     // Call superclass constructor
     Pokemon.call(this, name, type)
@@ -59,6 +60,12 @@ function Pikachu(name, type, nickname) {
 //         this.nickname = nickname
 //     }
 // }
+
+// Set Pikachu to inherit from Pokemon
+Pikachu.prototype = Object.create(Pokemon.prototype)
+
+const myPikachu = new Pikachu('Pika', 'electric', 'Pix')
+myPikachu.attack()
 
 /* Composition (alternative to inheritance) */
 // This function takes an object and returns an object with a method put into it
