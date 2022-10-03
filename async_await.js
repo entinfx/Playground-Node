@@ -56,8 +56,11 @@ getProcessedData()
 // * 'async' functions explicitly return a resolved promise:
 async function resolvedPromise() {
     return 'Promise resolved to this String'
+    // or w/o 'async': return Promise.resolve('Promise resolved to this String')
 }
-log(resolvedPromise())
+resolvedPromise().then(msg => {
+    log(msg)
+})
 
 // Use 'Promise.all' to await multiple promises concurrently:
 async function getMoreData() {
@@ -72,15 +75,3 @@ async function getMoreData() {
     }
 }
 getMoreData().then(allData => log(allData))
-
-// Use 'Promise.resolve.then()' to run the entire code inside off the main
-// thread. Using just 'return new Promise()' will run asynchronously only the
-// resolve statement itself.
-function timeConsumingFunc() {
-    return Promise.resolve().then(msg => {
-        let i = 0
-        while (i < 1000000000) i++
-        return log(`Time consuming function is done! (i = ${i})`)
-    })
-}
-timeConsumingFunc()

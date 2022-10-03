@@ -1,3 +1,6 @@
+const tick = Date.now()
+const log = msg => { console.log(`${Date.now() - tick}: ${msg}`) }
+
 // The callback way
 function doSomethingC1(errorCallback, dataCallback) {
     const errorOccurred = true
@@ -81,3 +84,15 @@ Promise.race([
     promiseB,
     promiseC
 ]).then(msg => console.log(msg))
+
+// Use 'Promise.resolve.then()' to run the entire code inside off the main
+// thread. Using just 'return new Promise()' will run asynchronously only the
+// resolve statement itself.
+function timeConsumingFunc() {
+    return Promise.resolve().then(_ => {
+        let i = 0
+        while (i < 1000000000) i++
+        return log(`Time consuming function is done! (i = ${i})`)
+    })
+}
+timeConsumingFunc()
