@@ -1,3 +1,6 @@
+const tick = Date.now()
+const log = msg => { console.log(`${Date.now() - tick}: ${msg}`) }
+
 function getData() {
     return new Promise((resolve, reject) => {
         const errorOccurred = false
@@ -26,12 +29,12 @@ function processData(data) {
 
 // Run getData() and processData() using then/catch:
 getData().then(data => {
-    console.log('Received: ' + data)
+    log('Received: ' + data)
     return processData(data)
 }).then(processedData => {
-    console.log('Processed: ' + processedData)
+    log('Processed: ' + processedData)
 }).catch(error => {
-    console.log(error)
+    log(error)
 })
 
 // Run getData() and processData() using async/await:
@@ -41,11 +44,11 @@ getData().then(data => {
 async function getProcessedData() {
     try {
         const data = await getData()
-        console.log('Received: ' + data)
+        log('Received: ' + data)
         const processedData = await processData(data)
-        console.log('Processed: ' + processedData)
+        log('Processed: ' + processedData)
     } catch(error) {
-        console.log(error)
+        log(error)
     }
 }
 getProcessedData()
@@ -54,7 +57,7 @@ getProcessedData()
 async function resolvedPromise() {
     return 'Promise resolved to this String'
 }
-console.log(resolvedPromise())
+log(resolvedPromise())
 
 // Use 'Promise.all' to await multiple promises concurrently:
 async function getMoreData() {
@@ -65,8 +68,19 @@ async function getMoreData() {
 
         return allData
     } catch (error) {
-        console.log(error)
+        log(error)
     }
 }
+getMoreData().then(allData => log(allData))
 
-console.log(getMoreData())
+// Use 'Promise.resolve.then()' to run the entire code inside off the main
+// thread. Using just 'return new Promise()' will run asynchronously only the
+// resolve statement itself.
+function timeConsumingFunc() {
+    return Promise.resolve().then(msg => {
+        let i = 0
+        while (i < 1000000000) i++
+        return log(`Time consuming function is done! (i = ${i})`)
+    })
+}
+timeConsumingFunc()
