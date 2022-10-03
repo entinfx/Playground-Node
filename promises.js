@@ -54,3 +54,30 @@ function doSomethingP() {
 //     .catch((error) => {
 //         console.log(error)
 //     })
+
+// Promise.all() allows to run multiple promises concurrently, instead of
+// waiting for each to finish before the next one starts:
+const promiseA = new Promise((resolve, reject) => {
+    resolve('Promise A')
+})
+
+const promiseB = new Promise((resolve, reject) => {
+    resolve('Promise B')
+})
+
+const promiseC = new Promise((resolve, reject) => {
+    resolve('Promise C')
+})
+
+Promise.all([
+    promiseA,
+    promiseB,
+    promiseC
+]).then(msg => console.log(msg))
+
+// Promise.race() returns as soon as the first promise is done:
+Promise.race([
+    promiseA,
+    promiseB,
+    promiseC
+]).then(msg => console.log(msg))
