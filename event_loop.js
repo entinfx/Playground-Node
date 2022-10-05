@@ -1,11 +1,13 @@
 /* The Event Loop */
-// 1. Run all sync code and queue up async events to be called back later
-// 2. Once the async event has finished, it reports back to the event loop to be
-//    ran in the next run.
-
-/* Types of callbacks */
-// 1. Macrotask (setTimeout, setInterval) gets executed on the next event loop
-// 2. Microtask (promises) gets executed before the start of the next event loop
+// * While the stack is not empty:
+//     * If a task is sync - execute it on the main thread
+//     * If a task is async - let WebAPI (browser) or C++ libs (Node) handle it
+//       on a separate thread sequentially in a separate event queue.
+// * When the async task is finished:
+//     * If it's a microtask (promise) - put the callback in the end of the
+//       currently running loop.
+//     * If it's a macrotask (setTimeout(), setInterval()) - put the callback in
+//       the beginning of the next loop.
 
 /* Execution order */
 console.log('1 Sync') // executes instantly
