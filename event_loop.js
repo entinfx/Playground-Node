@@ -2,7 +2,8 @@
 // * While the stack is not empty:
 //     * If a task is sync - execute it on the main thread
 //     * If a task is async - let WebAPI (browser) or C++ libs (Node) handle it
-//       on a separate thread sequentially in a separate event queue.
+//       on a separate thread sequentially, schedule callbacks in a separate
+//       callback queue.
 // * When the async task is finished:
 //     * If it's a microtask (promise) - put the callback in the end of the
 //       currently running loop.
